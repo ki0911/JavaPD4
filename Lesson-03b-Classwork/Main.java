@@ -7,13 +7,11 @@ class Main {
   // program begins.  
 
   void init(){
-
-      // This is how to print to the console 
-      // in Java.
-      System.out.println("Hello World");
+    System.out.println("Qihan");
+    System.out.println("New York");
+    System.out.println("Qihan New York");
     
   }
 
   
 }
- 
