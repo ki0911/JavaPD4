@@ -65,10 +65,8 @@ class Main {
     Declare and assign values to any new variables
 
 */
-    double x =2;
-    double A = 9;
-    double y = A/(x+1);
-    System.out.println("The value of y is:" + y);
+    
+    
 
 
 
