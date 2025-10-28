@@ -80,7 +80,7 @@ String getMonth(String date){
     }
 }
 boolean validatePswd(String pswd){
-    if (pswd.length() < 5 || pswd.length() > 8){
+    if (pswd.length() >= 5 && pswd.length() <+8){
         return false;
     }
 
