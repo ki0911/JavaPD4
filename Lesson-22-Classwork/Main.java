@@ -11,6 +11,9 @@ class Main {
    double[] tempC = {-4.5,0,23,24,34,5,10};
 
    double[] tempF = convert(tempC);
+   for(int i=0; i<tempF.length;i++);
+    int i = 0;
+    print(tempF[i]);
     
   }
 
