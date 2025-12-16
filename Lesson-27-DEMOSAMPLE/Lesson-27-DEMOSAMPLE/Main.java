@@ -20,7 +20,7 @@ class Main {
       '0','9','8','7','6'
     };
 
-    // Proposal 2 (lowercase -> uppercase, digits -> symbols)
+    // Proposal 2
     char[] sub2 = {
       'a','b','c','d','e','f','g','h','i','j',
       'k','l','m','n','o','p','q','r','s','t',
@@ -35,7 +35,6 @@ class Main {
       '!','@','#','$','%','^','&','*','(',')'
     };
 
-    // Encoding message
     String file = Input.readFile("test.txt");
 
     // Proposal 1
@@ -47,14 +46,12 @@ class Main {
     // Proposal 3 (double same letter -> next letter)
     String encodedMsg3 = doubleCharEncode(encodedMsg2);
 
-    // Caesar cipher (+1, no wrapping)
     String encodedMsg4 = encode(encodedMsg3);
 
-    // Reverse
     String encodedMsg5 = reverse(encodedMsg4);
     Input.writeFile("Encode3.txt", encodedMsg5);
 
-    // Decoding message (read final encoded file)
+    // Decoding message
     String file2 = Input.readFile("Encode3.txt");
 
     // Reverse back
@@ -69,7 +66,7 @@ class Main {
     // Reverse Proposal 1
     String decodedMsg4 = subEncryption(decodedMsg3, sub1b, sub1);
 
-    // NOTE: Proposal 3 is one-way and is NOT decoded.
+    // NOTE: Proposal 3
     Input.writeFile("DecodeFinal.txt", decodedMsg4);
   }
 
@@ -82,7 +79,7 @@ class Main {
     return bld;
   }
 
-  // Level 2 Cipher encoding with no wrapping (shift by +1)
+  // Level 2 Cipher encodin
   String encode(String txt){
     String bld = "";
     for(int i = 0; i < txt.length(); i++){
@@ -106,7 +103,7 @@ class Main {
     return bld;
   }
 
-  // Proposal 3: double same letter -> next letter (one-way)
+  // Proposal 3: double same letter -> next letter
   String doubleCharEncode(String txt){
     String bld = "";
 
