@@ -7,87 +7,144 @@ class Main {
 
   void init(){
 
-    // This example we are substituting all lower case 
-    // letters to another lower case letter.
-    char[] sub = new char[5];
-    sub[0] = 'a';
-    sub[1] = 'e';
-    sub[2] = 'i';
-    sub[3] = 'o';
-    sub[4] = 'u';
+    // Proposal 1 (keyboard opposite mapping)
+    char[] sub1 = {
+      'Q','W','E','R','T','Y','U','I','O','P',
+      'L','K','J',
+      '1','2','3','4','5'
+    };
 
-    char[] sub2 = new char[5];
-    sub2[0] = '\u2663';  // Club
-    sub2[1] = '\u2660';  // Spade
-    sub2[2] = '\u2665';  // Heart
-    sub2[3] = '\u2666';  // Diamond
-    sub2[4] = '\u2836';  // Bralle symbol
+    char[] sub1b = {
+      'M','N','B','V','C','X','Z','A','S','D',
+      'F','G','H',
+      '0','9','8','7','6'
+    };
 
-    
+    // Proposal 2 (lowercase -> uppercase, digits -> symbols)
+    char[] sub2 = {
+      'a','b','c','d','e','f','g','h','i','j',
+      'k','l','m','n','o','p','q','r','s','t',
+      'u','v','w','x','y','z',
+      '1','2','3','4','5','6','7','8','9','0'
+    };
+
+    char[] sub2b = {
+      'A','B','C','D','E','F','G','H','I','J',
+      'K','L','M','N','O','P','Q','R','S','T',
+      'U','V','W','X','Y','Z',
+      '!','@','#','$','%','^','&','*','(',')'
+    };
+
     // Encoding message
     String file = Input.readFile("test.txt");
 
-    //substituion
-    String encodedMsg1 = subEncryption(file,sub,sub2);
-    //Input.writeFile("Encode1.txt",encodedMsg1);
+    // Proposal 1
+    String encodedMsg1 = subEncryption(file, sub1, sub1b);
 
-    // caesar cipher
-    String encodedMsg2 = encode(encodedMsg1);
-    //Input.writeFile("Encode2.txt",encodedMsg2);
+    // Proposal 2
+    String encodedMsg2 = subEncryption(encodedMsg1, sub2, sub2b);
 
-    // reverse
-    String encodedMsg3 = reverse(encodedMsg2);
-    Input.writeFile("Encode3.txt",encodedMsg3);
+    // Proposal 3 (double same letter -> next letter)
+    String encodedMsg3 = doubleCharEncode(encodedMsg2);
 
-    
-    // decoding message
-    String file2 = Input.readFile("Encode1.txt");
-    
+    // Caesar cipher (+1, no wrapping)
+    String encodedMsg4 = encode(encodedMsg3);
+
+    // Reverse
+    String encodedMsg5 = reverse(encodedMsg4);
+    Input.writeFile("Encode3.txt", encodedMsg5);
+
+    // Decoding message (read final encoded file)
+    String file2 = Input.readFile("Encode3.txt");
+
+    // Reverse back
     String decodedMsg1 = reverse(file2);
-    //Input.writeFile("Decode1.txt", decodedMsg1);
-    
+
+    // Caesar back
     String decodedMsg2 = decode(decodedMsg1);
-    //Input.writeFile("Decode2.txt", decodedMsg2);
-    
-     String decodedMsg3 = subEncryption(decodedMsg2, sub2, sub);
-    //Input.writeFile("Decode1.txt", decodedMsg3);
-    
-    
+
+    // Reverse Proposal 2
+    String decodedMsg3 = subEncryption(decodedMsg2, sub2b, sub2);
+
+    // Reverse Proposal 1
+    String decodedMsg4 = subEncryption(decodedMsg3, sub1b, sub1);
+
+    // NOTE: Proposal 3 is one-way and is NOT decoded.
+    Input.writeFile("DecodeFinal.txt", decodedMsg4);
   }
+
   // Level 1 reverse string
   String reverse(String txt){
-    String bld ="";
-    
+    String bld = "";
+    for(int i = txt.length() - 1; i >= 0; i--){
+      bld = bld + txt.charAt(i);
+    }
     return bld;
   }
-  
-  
-  //Level 2 Cipher encoding with no wrapping
+
+  // Level 2 Cipher encoding with no wrapping (shift by +1)
   String encode(String txt){
-    String bld="";
-    
-     
+    String bld = "";
+    for(int i = 0; i < txt.length(); i++){
+      char ch = txt.charAt(i);
+      int ascii = (int)ch;
+      ch = (char)(ascii + 1);
+      bld = bld + ch;
+    }
     return bld;
   }
 
-  
+  // Decode (shift by -1)
   String decode(String txt){
-    String bld="";
-   
+    String bld = "";
+    for(int i = 0; i < txt.length(); i++){
+      char ch = txt.charAt(i);
+      int ascii = (int)ch;
+      ch = (char)(ascii - 1);
+      bld = bld + ch;
+    }
     return bld;
   }
 
-  // Level 3 Substituion encoding
-  String subEncryption(String s, char[] sub, char[] sub2){
-    String bld="";
-   
+  // Proposal 3: double same letter -> next letter (one-way)
+  String doubleCharEncode(String txt){
+    String bld = "";
+
+    for(int i = 0; i < txt.length(); i++){
+      if(i < txt.length() - 1 && txt.charAt(i) == txt.charAt(i + 1)){
+        char ch = txt.charAt(i);
+        int ascii = (int)ch;
+        char next = (char)(ascii + 1);
+        bld = bld + next;
+        i++; 
+      }else{
+        bld = bld + txt.charAt(i);
+      }
+    }
+
     return bld;
   }
-  
-  
+
+  // Substitution encoding
+  String subEncryption(String s, char[] sub, char[] sub2){
+    String bld = "";
+    for(int i = 0; i < s.length(); i++){
+      char ch = s.charAt(i);
+      char out = ch;
+
+      for(int j = 0; j < sub.length; j++){
+        if(ch == sub[j]){
+          out = sub2[j];
+        }
+      }
+
+      bld = bld + out;
+    }
+    return bld;
+  }
+
   int randInt(int lower, int upper){
     int range = upper - lower;
     return (int)(Math.random()*range+lower);
   }
-
 }
