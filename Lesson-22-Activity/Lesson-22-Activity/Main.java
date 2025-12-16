@@ -9,7 +9,7 @@ class Main {
 
     //Using this array to test your summArray and avgArray function
     int nums[] = {10,15,22,54,32,34,65,87,45,100,23,99,95,87,56,83};
-    print(sumArry(nums));
+    print(sumArray(nums));
     
 
     // Use these two arrays to test your quizGrader function
@@ -21,7 +21,7 @@ class Main {
   //Problem 1:
   // Write a function called sumArray that accepts an array of integers and
   // returns the sum of all the values in the array.
-    int sumArry(int[] numbers){
+    int sumArray(int[] numbers){
       int sum = 0;
       for(int i=0; i<numbers.length; i++){
         sum += numbers[i];
@@ -33,11 +33,7 @@ class Main {
   // Write a function called avgArray that accepts an array of integers and
   // returns the average of the values in the array
     double avgArray (int[] numbers){
-      int sum  = 0;
-      for(int i=0; i<numbers.length; i++){
-        sum += numbers [i];
-      }
-      return sum/numbers.length;
+    return (double)sumArray(numbers)/numbers.length;
     }
 
 
@@ -49,8 +45,8 @@ class Main {
   //
   // Return the quiz grade by counting the number of correct answers divided by
   // the number of quistions.
-    int quizGrader (char [] students, char [] key){
-      int correct = 0;
+    double quizGrader (char [] students, char [] key){
+      double correct = 0;
       for(int i=0; i<students.length; i++){
         if(students[i] == key[i]){
           correct ++;
