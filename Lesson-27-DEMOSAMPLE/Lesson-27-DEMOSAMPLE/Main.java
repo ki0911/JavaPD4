@@ -94,7 +94,7 @@ class Main {
     return bld;
   }
 
-  // Decode (shift by -1)
+  // Decode 
   String decode(String txt){
     String bld = "";
     for(int i = 0; i < txt.length(); i++){
