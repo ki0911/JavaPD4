@@ -3,7 +3,7 @@ class Main {
     (new Main()).init();
   }
 
-//proposal 1
+  // proposal 1
   char[] sub1 = {
     'Q','W','E','R','T','Y','U','I','O','P',
     'L','K','J',
@@ -20,7 +20,7 @@ class Main {
     '0','9','8','7','6'
   };
 
-//proposal 2
+  // proposal 2
   char[] sub2 = {
     'a','b','c','d','e','f','g','h','i','j',
     'k','l','m','n','o','p','q','r','s','t',
@@ -37,7 +37,7 @@ class Main {
 
   void init(){
 
-//test
+    // test
     System.out.println("TESTS");
     String a = "Whatever";
     System.out.println("Original: " + a);
@@ -60,7 +60,6 @@ class Main {
 
     System.out.println("==========================\n");
 
-
     // ENCRYPT / DECRYPT
     String file = Input.readFile("test.txt");
 
@@ -76,25 +75,25 @@ class Main {
     Input.writeFile("Decode.txt", d3);
   }
 
-//proposal 1
+  // proposal 1 
   String proposal1Encode(String txt){
-    return subEncryption(txt, sub1, sub1b);
+    return swapEncryption(txt, sub1, sub1b);
   }
 
   String proposal1Decode(String txt){
-    return subEncryption(txt, sub1b, sub1);
+    return swapEncryption(txt, sub1, sub1b);
   }
 
-//proposal 2
+  // proposal 2 
   String proposal2Encode(String txt){
-    return subEncryption(txt, sub2, sub2b);
+    return swapEncryption(txt, sub2, sub2b);
   }
 
   String proposal2Decode(String txt){
-    return subEncryption(txt, sub2b, sub2);
+    return swapEncryption(txt, sub2, sub2b);
   }
 
-//proposal 3
+  // proposal 3 
   String proposal3Encode(String txt){
     String bld = "";
     for(int i = 0; i < txt.length(); i++){
@@ -131,22 +130,30 @@ class Main {
     return bld;
   }
 
-
-  // Substituion encoding
-  String subEncryption(String s, char[] sub, char[] sub2){
+  // SWAP substitution
+  String swapEncryption(String s, char[] left, char[] right){
     String bld = "";
+
     for(int i = 0; i < s.length(); i++){
       char ch = s.charAt(i);
       char out = ch;
 
-      for(int j = 0; j < sub.length; j++){
-        if(ch == sub[j]){
-          out = sub2[j];
+      for(int j = 0; j < left.length; j++){
+        if(ch == left[j]){
+          out = right[j];
+        }
+      }
+
+      for(int j = 0; j < right.length; j++){
+        if(ch == right[j]){
+          out = left[j];
         }
       }
 
       bld = bld + out;
     }
+
     return bld;
   }
 }
+ 
