@@ -2,127 +2,137 @@ class Main {
   public static void main(String[] args) {
     (new Main()).init();
   }
-  void print(Object o){ System.out.println(o);}
-  void printt(Object o){ System.out.print(o);}
+
+//proposal 1
+  char[] sub1 = {
+    'Q','W','E','R','T','Y','U','I','O','P',
+    'L','K','J',
+    'q','w','e','r','t','y','u','i','o','p',
+    'l','k','j',
+    '1','2','3','4','5'
+  };
+
+  char[] sub1b = {
+    'M','N','B','V','C','X','Z','A','S','D',
+    'F','G','H',
+    'm','n','b','v','c','x','z','a','s','d',
+    'f','g','h',
+    '0','9','8','7','6'
+  };
+
+//proposal 2
+  char[] sub2 = {
+    'a','b','c','d','e','f','g','h','i','j',
+    'k','l','m','n','o','p','q','r','s','t',
+    'u','v','w','x','y','z',
+    '1','2','3','4','5','6','7','8','9','0'
+  };
+
+  char[] sub2b = {
+    'A','B','C','D','E','F','G','H','I','J',
+    'K','L','M','N','O','P','Q','R','S','T',
+    'U','V','W','X','Y','Z',
+    '!','@','#','$','%','^','&','*','(',')'
+  };
 
   void init(){
 
-    // Proposal 1 (keyboard opposite mapping)
-    char[] sub1 = {
-      'Q','W','E','R','T','Y','U','I','O','P',
-      'L','K','J',
-      '1','2','3','4','5'
-    };
+//test
+    System.out.println("TESTS");
+    String a = "Whatever";
+    System.out.println("Original: " + a);
 
-    char[] sub1b = {
-      'M','N','B','V','C','X','Z','A','S','D',
-      'F','G','H',
-      '0','9','8','7','6'
-    };
+    String p1 = proposal1Encode(a);
+    System.out.println("P1 Encode: " + p1);
+    System.out.println("P1 Decode: " + proposal1Decode(p1));
 
-    // Proposal 2
-    char[] sub2 = {
-      'a','b','c','d','e','f','g','h','i','j',
-      'k','l','m','n','o','p','q','r','s','t',
-      'u','v','w','x','y','z',
-      '1','2','3','4','5','6','7','8','9','0'
-    };
+    System.out.println("--------------------");
 
-    char[] sub2b = {
-      'A','B','C','D','E','F','G','H','I','J',
-      'K','L','M','N','O','P','Q','R','S','T',
-      'U','V','W','X','Y','Z',
-      '!','@','#','$','%','^','&','*','(',')'
-    };
+    String p2 = proposal2Encode(a);
+    System.out.println("P2 Encode: " + p2);
+    System.out.println("P2 Decode: " + proposal2Decode(p2));
 
+    System.out.println("--------------------");
+
+    String p3 = proposal3Encode(a);
+    System.out.println("P3 Encode: " + p3);
+    System.out.println("P3 Decode: " + proposal3Decode(p3));
+
+    System.out.println("==========================\n");
+
+
+    // ENCRYPT / DECRYPT
     String file = Input.readFile("test.txt");
 
-    // Proposal 1
-    String encodedMsg1 = subEncryption(file, sub1, sub1b);
+    String e1 = proposal1Encode(file);
+    String e2 = proposal2Encode(e1);
+    String e3 = proposal3Encode(e2);
+    Input.writeFile("Encode.txt", e3);
 
-    // Proposal 2
-    String encodedMsg2 = subEncryption(encodedMsg1, sub2, sub2b);
-
-    // Proposal 3 (double same letter -> next letter)
-    String encodedMsg3 = doubleCharEncode(encodedMsg2);
-
-    String encodedMsg4 = encode(encodedMsg3);
-
-    String encodedMsg5 = reverse(encodedMsg4);
-    Input.writeFile("Encode3.txt", encodedMsg5);
-
-    // Decoding message
-    String file2 = Input.readFile("Encode3.txt");
-
-    // Reverse back
-    String decodedMsg1 = reverse(file2);
-
-    // Caesar back
-    String decodedMsg2 = decode(decodedMsg1);
-
-    // Reverse Proposal 2
-    String decodedMsg3 = subEncryption(decodedMsg2, sub2b, sub2);
-
-    // Reverse Proposal 1
-    String decodedMsg4 = subEncryption(decodedMsg3, sub1b, sub1);
-
-    // NOTE: Proposal 3
-    Input.writeFile("DecodeFinal.txt", decodedMsg4);
+    String enc = Input.readFile("Encode.txt");
+    String d1 = proposal3Decode(enc);
+    String d2 = proposal2Decode(d1);
+    String d3 = proposal1Decode(d2);
+    Input.writeFile("Decode.txt", d3);
   }
 
-  // Level 1 reverse string
-  String reverse(String txt){
-    String bld = "";
-    for(int i = txt.length() - 1; i >= 0; i--){
-      bld = bld + txt.charAt(i);
-    }
-    return bld;
+//proposal 1
+  String proposal1Encode(String txt){
+    return subEncryption(txt, sub1, sub1b);
   }
 
-  // Level 2 Cipher encodin
-  String encode(String txt){
+  String proposal1Decode(String txt){
+    return subEncryption(txt, sub1b, sub1);
+  }
+
+//proposal 2
+  String proposal2Encode(String txt){
+    return subEncryption(txt, sub2, sub2b);
+  }
+
+  String proposal2Decode(String txt){
+    return subEncryption(txt, sub2b, sub2);
+  }
+
+//proposal 3
+  String proposal3Encode(String txt){
     String bld = "";
     for(int i = 0; i < txt.length(); i++){
       char ch = txt.charAt(i);
-      int ascii = (int)ch;
-      ch = (char)(ascii + 1);
-      bld = bld + ch;
-    }
-    return bld;
-  }
 
-  // Decode 
-  String decode(String txt){
-    String bld = "";
-    for(int i = 0; i < txt.length(); i++){
-      char ch = txt.charAt(i);
-      int ascii = (int)ch;
-      ch = (char)(ascii - 1);
-      bld = bld + ch;
-    }
-    return bld;
-  }
-
-  // Proposal 3: double same letter -> next letter
-  String doubleCharEncode(String txt){
-    String bld = "";
-
-    for(int i = 0; i < txt.length(); i++){
-      if(i < txt.length() - 1 && txt.charAt(i) == txt.charAt(i + 1)){
-        char ch = txt.charAt(i);
-        int ascii = (int)ch;
-        char next = (char)(ascii + 1);
-        bld = bld + next;
-        i++; 
-      }else{
-        bld = bld + txt.charAt(i);
+      if(ch >= 'a' && ch <= 'z'){
+        if(ch == 'z') ch = 'a';
+        else ch = (char)((int)ch + 1);
+      }else if(ch >= 'A' && ch <= 'Z'){
+        if(ch == 'Z') ch = 'A';
+        else ch = (char)((int)ch + 1);
       }
-    }
 
+      bld = bld + ch;
+    }
     return bld;
   }
 
-  // Substitution encoding
+  String proposal3Decode(String txt){
+    String bld = "";
+    for(int i = 0; i < txt.length(); i++){
+      char ch = txt.charAt(i);
+
+      if(ch >= 'a' && ch <= 'z'){
+        if(ch == 'a') ch = 'z';
+        else ch = (char)((int)ch - 1);
+      }else if(ch >= 'A' && ch <= 'Z'){
+        if(ch == 'A') ch = 'Z';
+        else ch = (char)((int)ch - 1);
+      }
+
+      bld = bld + ch;
+    }
+    return bld;
+  }
+
+
+  // Substituion encoding
   String subEncryption(String s, char[] sub, char[] sub2){
     String bld = "";
     for(int i = 0; i < s.length(); i++){
@@ -138,10 +148,5 @@ class Main {
       bld = bld + out;
     }
     return bld;
-  }
-
-  int randInt(int lower, int upper){
-    int range = upper - lower;
-    return (int)(Math.random()*range+lower);
   }
 }
