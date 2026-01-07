@@ -97,7 +97,7 @@ class Main {
   String proposal3Encode(String txt){
     String bld = "";
     for(int i = 0; i < txt.length(); i++){
-      char ch = txt.charAt(i);
+      char ch = txt.charAt(i); 
 
       if(ch >= 'a' && ch <= 'z'){
         if(ch == 'z') ch = 'a';
