@@ -1,0 +1,20 @@
+
+Draw a more complex object using the basic drawing funtions. Some examples:
+
+house
+barn
+building
+wall clock
+moon
+flower
+car
+pyramid
+sine wave
+stop sign
+traffic light
+a fish
+a ladder
+smiley face
+cell phone tower
+
+OR anything you can think of

@@ -1,0 +1,8 @@
+Problem:
+
+Create a game that has:
+
+- 25 balls of different colors, speed and size; going from left to right
+- 25 balls of different colors, speed and size; going from top to bottom
+
+The game is to avoid having the mouse hit any of the balls.  Keep a count on the screen of the number of times the mouse was hit by a ball.
