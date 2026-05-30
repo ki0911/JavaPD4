@@ -1,0 +1,96 @@
+html,body{
+  margin:0 auto;
+  font-family:Arial;
+}
+.container{
+  display:flex;
+  padding:10px;
+}
+.center{
+  justify-content:center;
+  align-items:center;
+}
+
+nav{
+  background-color:cornflowerblue;
+}
+nav a{
+  color:black;
+  padding:10px;
+  flex:1;
+  text-decoration:none;
+  text-align:center;
+}
+nav a:hover{
+  color:white;
+}
+.subbanner{
+  background-color:cornflowerblue;
+}
+#banner{
+  background-color:blue;
+  color:white;
+}
+#footer{
+  background-color:cornflowerblue;
+  color:white;
+  /*position:fixed;*/
+  left: 0;
+  right: 0;
+  bottom:0px;
+}
+ 
+
+.highlight{
+  font-style:italic;
+  color:blue;
+}
+.heading{
+  font-weight:bold;
+}
+.card a{
+  text-decoration:none;
+  background-color:blue;
+  color:white;
+  border-radius:4px;
+  padding:6px;
+  box-shadow:2px 2px 2px black;
+}
+.card a:hover{
+  background-color:cornflowerblue;
+}
+#panel{
+  flex:1;
+}
+
+
+.filter{
+  display:flex;
+  background-color: #dff2ff;
+  border:1px solid black;
+  
+}
+
+
+#output {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+}
+
+.card {
+  border: 1px solid rgb(9, 9, 78);
+  padding: 5px;
+  width: 300px;  
+  border-radius: 10px;
+  background-color: white;
+  text-align: center;
+  margin-top: 15px;
+  color: rgb(22, 21, 21);
+}
+
+.card h3 {
+  color: blue;   /* 👈 改颜色 */
+}
+
